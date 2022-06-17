@@ -20,7 +20,7 @@ app.use("/blog", blogRouter);
 app.use("/user", userRouter);
 
 app.get("/", (req, res) => {
-  res.status(200).json({ messgae: "Welcome Fellow Gossipers" });
+  res.status(200).json({ message: "Welcome Fellow Gossipers" });
 });
 
 app.listen(PORT, () => {
