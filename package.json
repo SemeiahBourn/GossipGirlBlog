@@ -1,0 +1,31 @@
+{
+  "dependencies": {
+    "bcrypt": "^5.0.1",
+    "dotenv": "^16.0.1",
+    "express": "^4.18.1",
+    "express-validator": "^6.14.1",
+    "helmet": "^5.1.0",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^6.3.8",
+    "morgan": "^1.10.0",
+    "nodemon": "^2.0.16"
+  },
+  "scripts": {
+    "start": "node server.js"
+  },
+  "name": "gossipgirlblog",
+  "description": "",
+  "version": "1.0.0",
+  "main": "server.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SemeiahBourn/GossipGirlBlog.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/SemeiahBourn/GossipGirlBlog/issues"
+  },
+  "homepage": "https://github.com/SemeiahBourn/GossipGirlBlog#readme"
+}
