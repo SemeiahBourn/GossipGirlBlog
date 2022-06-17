@@ -5,7 +5,7 @@ const morgan = require("morgan");
 const helmet = require("helmet");
 
 require("dotenv").config();
-import "dotenv/config.js";
+
 
 const mongoConfig = require("./config/mongoConfig");
 const authRouter = require("./routes/authRouter");
