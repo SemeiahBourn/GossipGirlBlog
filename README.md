@@ -11,7 +11,7 @@ $ npm install.
  Database: Mongo
  Tools: Mongo
 
-## Usagge
+## Usage
 Start the MongoDB service.
 Generate fake data for the database
 

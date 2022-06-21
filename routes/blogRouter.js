@@ -15,6 +15,7 @@ router.get('/',authMiddleware, async (req,res)=>{
        console.log(error) 
     }
 })
+//post
 router.post('/',[
     check('username', "Username is required from Middleware!").notEmpty(),
     check("email", "Please use a valid email! from middleware").isEmail(),
