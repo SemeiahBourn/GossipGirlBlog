@@ -3,8 +3,7 @@ const blogModel = require('../models/blogSchema')
 const authMiddleware = require('../middleware/authMiddleware')
 const router=express.Router()
 // pulls out the two function we need from express validator
-const {check, validationResult} = require('express-validator')
-const jwt = require("jsonwebtoken");
+
 
 //get 
 router.get('/',authMiddleware, async (req,res)=>{
@@ -15,13 +14,13 @@ router.get('/',authMiddleware, async (req,res)=>{
        console.log(error) 
     }
 })
-//post
-router.post('/',[
-    check('username', "Username is required from Middleware!").notEmpty(),
-    check("email", "Please use a valid email! from middleware").isEmail(),
-    check("password","please enter a password ").notEmpty()
-] ,async(req,res)=>{
+//post and create
+router.post('/', authMiddleware, async(req,res)=>{
 const blogData =req.body
+blogData.user = req.user.id
+
+blogData.created_by = req.user.id
+console.log(blogData)
 try {
     const blog= await blogModel.create(blogData)
     res.status(201).json(blog)
@@ -32,11 +31,11 @@ try {
 })
 
 //get blog by id
-router.get('/:id', async(req,res)=>{
+router.get('/:id',authMiddleware, async(req,res)=>{
     const id =req.params.id
-    const newBlogData =req.body
+   
     try{
-        const blog =await blogModel.findById(id,newBlogData)
+        const blog =await blogModel.findById(id)
         res.status(200).json(blog)
     }catch (error) {
         console.error(error)
@@ -46,7 +45,7 @@ router.get('/:id', async(req,res)=>{
     }
 })
 //update by id
-router.put('/:id',async(req,res)=>{
+router.put('/:id',authMiddleware,async(req,res)=>{
     const id = req.params.id
     const newBlogData = req.body
     try{
@@ -58,11 +57,18 @@ router.put('/:id',async(req,res)=>{
     }
 })
 //delete a blog entry
-router.delete('/:id', async(req,res)=>{
+router.delete('/:id',authMiddleware, async(req,res)=>{
     const id = req.params.id
     try {
-        const contact =await blogModel.findByIdAndUpdate(id)
+        const blogToDelete =await blogModel.findByIdAndDelete(id)
         res.status(200).json({msg:'contact was deleted!'})
+        if (blogToDelete.user._id.toString() !== req.user.id){
+            // if they are NOT the same we send error message
+            return res.status(400).json({msg: 'Not Authorized!'})
+        }
+        // if they are the same IDs we delete it
+        const blog = await blogModel.findByIdAndDelete(id)
+        res.status(200).json('Blog deleted by the user!')
     } catch (error) {
         console.log(error);
         

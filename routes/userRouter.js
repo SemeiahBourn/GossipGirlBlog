@@ -17,6 +17,7 @@ router.post("/",  [
 ],
 async(req,res)=>{
     const userData =req.body;
+  
     const errors=validationResult(req);
     //checking for validation errors
     if(!errors.isEmpty()){
